@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #1a1a1a;
+
+}
+
+
+.input-stripe-custom, input, .InputElement  {
+  border: 1px solid #efefef;
+  padding: .5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: .75rem;
+  width:-webkit-fill-available;
+  box-shadow: -2px 5px 20px 0 rgb(173 173 173 / 19%);
+}
+
+button{
+  cursor: pointer;
+}
+
+
+input::placeholder {
+  color: #E3E2EC;
+}
+
+*:focus {
+  outline: none;
+}
+
+.label{
+  display: block;
+  padding: .35rem .25rem;
+  font-size: 80%;
+  font-weight: 500;
+}
+
+
+a{
+  text-decoration: none;
+}

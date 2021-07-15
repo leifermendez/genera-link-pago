@@ -1,0 +1,46 @@
+<div class="checkout">
+  <div class="checkout-in">
+    <div class="checkout-user">
+      <img class="avatar" src="https://i.imgur.com/mWk2Z4c.png" alt="">
+    </div>
+
+    <div class="checkout-customer">
+      <div class="title">Hola, <span class="highlight">{{orderData?.name}}</span></div>
+    </div>
+
+    <div class="checkout-card">
+      <div class="checkbox-alert">
+        📌 A continuación debes de introducir los datos de tu tarjeta para procesar el pago! <br>
+        El pago se procesara mediante la platforma de <b><a href="https://stripe.com/" target="_blank">stripe</a></b>
+      </div>
+      <form action="" [formGroup]="form" (submit)="initPay()">
+        <div class="input input-amount">
+          <label class="label">Monto a pagar</label>
+          <input type="text"  readonly formControlName="amount" placeholder="0.00">
+          <span class="currency">USD</span>
+        </div>
+        <hr>
+        <div class="input">
+          <label class="label">Número de tarjeta</label>
+          <div id="card"></div>
+        </div>
+        <hr>
+        <div class="input">
+          <label class="label">CVC</label>
+          <div id="cvc"></div>
+        </div>
+        <hr>
+        <div class="input">
+          <label class="label">Fecha de vencimiento</label>
+          <div id="exp"></div>
+        </div>
+        <div class="terms">
+          <a href="">Links</a>
+          <a href="">Links</a>
+        </div>
+
+        <button [disabled]="form.invalid || form.disabled" class="button" type="submit">Pagar</button>
+      </form>
+    </div>
+  </div>
+</div>

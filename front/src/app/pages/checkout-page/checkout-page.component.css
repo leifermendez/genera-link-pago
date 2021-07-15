@@ -1,0 +1,102 @@
+.checkout {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  padding: 2rem 0;
+  height: 100%;
+  width: 40rem;
+}
+
+
+.checkout-in {
+  margin: .5rem;
+  width: 100%;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 3rem;
+}
+
+.checkout-user {
+  text-align: center;
+  padding: 1rem 0 2rem;
+}
+
+.checkout-user .avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  object-fit: cover;
+  box-shadow: -2px 5px 20px 0 rgb(173 173 173 / 19%);
+}
+
+
+.button {
+  margin: 1.5rem 0;
+  width: 100%;
+  border: 0;
+  height: 40px;
+  border-radius: .75rem;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #4361ee;
+}
+
+hr {
+  border-top: 0;
+  border-bottom: solid 0px whitesmoke;
+  margin: .5rem 0
+}
+
+.terms{
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem;
+  font-size: 80%;
+}
+
+.terms a{
+  text-decoration: none;
+  font-weight: 500;
+  color: #8a8a8a;
+}
+
+button:disabled {
+  opacity: .5;
+}
+
+.checkbox-alert{
+  font-size: .9rem;
+  padding: .75rem;
+  font-weight: 500;
+  border-radius: .75rem;
+  box-shadow: -2px 5px 20px 0 rgb(173 173 173 / 19%);
+  margin-bottom: 1rem;
+}
+
+
+.checkout-customer .title{
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.highlight{
+  padding: 0 .5rem;
+  background-color: #fff2b2;
+}
+
+.input-amount{
+  position: relative;
+}
+
+.input-amount input{
+  background-color: transparent;
+}
+.currency{
+  position: absolute;
+  right: 0;
+  padding: .75rem;
+}
+
