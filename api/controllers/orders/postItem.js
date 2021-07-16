@@ -1,5 +1,6 @@
 const orders = require('../../models/orders')
-const { generatePaymentIntent } = require('../../services/stripe')
+
+//TODO: Generamos nueva orden y guardamos en base de datos
 
 const postItem = async (req, res) => {
     try {
@@ -8,7 +9,6 @@ const postItem = async (req, res) => {
             name,
             amount
         })
-
 
         res.send({ data: oderRes })
     } catch (e) {

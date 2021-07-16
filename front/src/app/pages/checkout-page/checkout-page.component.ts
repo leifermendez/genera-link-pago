@@ -18,7 +18,7 @@ declare global {
   styleUrls: ['./checkout-page.component.css']
 })
 export class CheckoutPageComponent implements OnInit {
-  private readonly STRIPE!: any;
+  private readonly STRIPE!: any; //TODO: window.Stripe
   private elementStripe!: any;
   cardNumber: any;
   cardCvv: any;
@@ -26,10 +26,6 @@ export class CheckoutPageComponent implements OnInit {
   form: FormGroup = new FormGroup({})
   id!: string;
   orderData!: any;
-  cardHandlerCard = this.onChangeCard.bind(this);
-  cardHandlerCvv = this.onChangeCvv.bind(this);
-  cardHandlerExp = this.onChangeExp.bind(this);
-
 
   constructor(private fb: FormBuilder,
               private toaster: Toaster,
@@ -40,13 +36,14 @@ export class CheckoutPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id') || '';
+
     this.form = this.fb.group({
       amount: ['', [Validators.required, Validators.min(1), Validators.max(100000)]],
-      cardNumber: [false, [Validators.required, Validators.requiredTrue]],
-      cardCvv: [false, [Validators.required, Validators.requiredTrue]],
-      cardExp: [false, [Validators.required, Validators.requiredTrue]],
-
+      cardNumber: [false, [Validators.required, Validators.requiredTrue]], //TODO true | false
+      cardCvv: [false, [Validators.required, Validators.requiredTrue]],//TODO true | false
+      cardExp: [false, [Validators.required, Validators.requiredTrue]],//TODO true | false
     })
+
     this.loadDetail();
     this.createStripeElement()
   }
@@ -54,35 +51,20 @@ export class CheckoutPageComponent implements OnInit {
   loadDetail(): void {
     this.restService.getOrderDetail(this.id).subscribe(({data}) => {
       this.orderData = data;
-      if (!data) {
-        this.toaster.open('🔴 Error con orden');
+      if (data.status.includes('succe')) {
         this.form.disable()
-      } else {
-        if (data.status.includes('succe')) {
-          this.toaster.open({
-            text: '🔴 Error con orden',
-            caption: 'Ya se ha pagado'
-          });
-        }
-        this.form.patchValue({
-          amount: data.amount
-        })
+        this.toaster.open({
+          text: '🔴 Error con orden',
+          caption: 'Ya se ha pagado'
+        });
       }
-
+      this.form.patchValue({
+        amount: data.amount
+      })
     })
   }
 
   private createStripeElement = () => {
-    console.log(this.STRIPE)
-    this.elementStripe = this.STRIPE.elements({
-      fonts: [
-        {
-          cssSrc:
-            'https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap',
-        },
-      ],
-    });
-
     const style = {
       base: {
         color: '#000000',
@@ -98,6 +80,17 @@ export class CheckoutPageComponent implements OnInit {
       },
     };
 
+    //TODO: SDK de Stripe inicia la generacion de elementos
+    this.elementStripe = this.STRIPE.elements({
+      fonts: [
+        {
+          cssSrc:
+            'https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap',
+        },
+      ],
+    });
+
+    //TODO: SDK Construimos los inputs de tarjeta, cvc, fecha con estilos
     const cardNumber = this.elementStripe.create('cardNumber', {
       placeholder: '4242 4242 4242 4242',
       style,
@@ -119,42 +112,43 @@ export class CheckoutPageComponent implements OnInit {
         base: 'input-stripe-custom'
       },
     });
+
+    //TODO: SDK Montamos los elementos en nuestros DIV identificados on el #id
     cardNumber.mount('#card');
     cardExp.mount('#exp');
     cardCvc.mount('#cvc');
+
     this.cardNumber = cardNumber;
     this.cardExp = cardExp;
     this.cardCvv = cardCvc;
-    this.cardNumber.addEventListener('change', this.cardHandlerCard);
-    this.cardExp.addEventListener('change', this.cardHandlerExp);
-    this.cardCvv.addEventListener('change', this.cardHandlerCvv);
+
+    //TODO: Escuchamos los eventos del SDK
+    this.cardNumber.addEventListener('change', this.onChangeCard.bind(this));
+    this.cardExp.addEventListener('change', this.onChangeExp.bind(this));
+    this.cardCvv.addEventListener('change', this.onChangeCvv.bind(this));
 
   }
-
-  onChangeCard({error}: any) {
-    this.form.patchValue({cardNumber: !error});
-    this.cd.detectChanges();
-  }
-
-  onChangeCvv({error}: any) {
-    this.form.patchValue({cardCvv: !error});
-    this.cd.detectChanges();
-  }
-
-  onChangeExp({error}: any) {
-    this.form.patchValue({cardExp: !error});
-    this.cd.detectChanges();
-  }
-
 
   async initPay(): Promise<any> {
     try {
       this.form.disable();
+      //TODO: SDK de Stripe genera un TOKEN para la intencion de pago!
       const {token} = await this.STRIPE.createToken(this.cardNumber)
+
+      //TODO: Enviamos el token a nuesta api donde generamos (stripe) un metodo de pago basado en el token
+      //TODO: tok_23213
       const {data} = await this.restService.sendPayment(token.id, this.id)
+
+      //TODO: Nuestra api devolver un "client_secret" que es un token unico por intencion de pago
+      //TODO: SDK de stripe se encarga de verificar si el banco necesita autorizar o no
       this.STRIPE.handleCardPayment(data.client_secret)
-        .then((res: any) => {
-          this.toaster.open('Pago exitoso!')
+        .then(async () => {
+
+          //TODO: 👌 Money Money!!!
+          this.toaster.open({text: 'Dinerito dineron', caption: 'Yeah!', type: 'success'})
+
+          //TODO: Enviamos el id "localizador" de nuestra orden para decirle al backend que confirme con stripe si es verdad!
+          await this.restService.confirmOrder(this.id)
         })
         .catch(() => {
           this.toaster.open('Error con el pago')
@@ -164,4 +158,20 @@ export class CheckoutPageComponent implements OnInit {
     }
 
   }
+
+  //TODO: Manejadores de validacion de input de stripe
+
+  onChangeCard({error}: any) {
+    this.form.patchValue({cardNumber: !error});
+  }
+
+  onChangeCvv({error}: any) {
+    this.form.patchValue({cardCvv: !error});
+  }
+
+  onChangeExp({error}: any) {
+    this.form.patchValue({cardExp: !error});
+  }
+
+
 }

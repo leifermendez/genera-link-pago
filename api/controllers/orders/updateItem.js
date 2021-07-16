@@ -1,12 +1,23 @@
 const orders = require('../../models/orders')
 const { generatePaymentIntent, generatePaymentMethod } = require('../../services/stripe')
 
+//TODO: Buscamos orden y genramos intencion de pago
+
 const updateItem = async (req, res) => {
     try {
         const { id } = req.params;
         const { token } = req.body
+
+        //TODO: Buscamos orden en nuestra base de datos
+
         const resOrder = await orders.findOne({ localizator: id })
-        const responseMethod = await generatePaymentMethod(token)
+
+        //TODO: Generamos metodo de pago en Stripe
+
+        const responseMethod = await generatePaymentMethod(token) //TODO: 🔴 Token magico!
+
+        //TODO: Generamos intencion de pago
+
         const resPaymentIntent = await generatePaymentIntent(
             {
                 amount: resOrder.amount,
@@ -15,12 +26,10 @@ const updateItem = async (req, res) => {
             }
         )
 
+        //TODO: Actualizamos  orden con id de intencion de pago
         await orders.findOneAndUpdate({ localizator: id }, {
             stripeId: resPaymentIntent.id
         })
-
-        console.log(resPaymentIntent)
-        // const oderRes = await confirmPaymentIntent(id, token)
 
         res.send({ data: resPaymentIntent })
 

@@ -62,9 +62,7 @@ hr {
   color: #8a8a8a;
 }
 
-button:disabled {
-  opacity: .5;
-}
+
 
 .checkbox-alert{
   font-size: .9rem;

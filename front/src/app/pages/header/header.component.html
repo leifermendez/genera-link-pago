@@ -1,0 +1,15 @@
+<div class="header">
+  <ul class="header-list">
+    <li *ngFor="let item of menu">
+      <div *ngIf="item?.path" class="header-btn" [routerLink]="item?.path">
+        <i [className]="item?.icon"></i>
+        <span>{{item?.name}}</span>
+      </div>
+
+      <a target="_blank" *ngIf="item?.href" class="header-btn" [href]="item?.href">
+        <i [className]="item?.icon"></i>
+        <span>{{item?.name}}</span>
+      </a>
+    </li>
+  </ul>
+</div>

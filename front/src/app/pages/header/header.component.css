@@ -1,0 +1,41 @@
+.header {
+  /*background-color: red;*/
+  z-index: 1;
+  position: fixed;
+  background-color: white;
+  width: 100%;
+  box-shadow: -2px 5px 20px 0 rgb(173 173 173 / 19%);
+}
+
+.header-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.header-list li{
+  cursor: pointer;
+  padding: .5rem .75rem;
+  display: flex;
+}
+
+.header-list li:hover{
+  background-color: #f3f3f3;
+}
+
+.header-btn{
+  display: flex;
+}
+
+.header-btn span{
+  padding: 0 .5rem;
+  font-weight: 500;
+}
+
+a{
+  text-decoration: none;
+  color: #1a1a1a;
+}

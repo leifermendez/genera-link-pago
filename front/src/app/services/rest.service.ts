@@ -21,4 +21,12 @@ export class RestService {
         token
       }).toPromise()
   }
+
+  generateOrder(data: { name: string, amount: number }): Observable<any> {
+    return this.http.post(`${environment.api}/orders`, data)
+  }
+
+  confirmOrder(id:string): Promise<any> {
+    return this.http.patch(`${environment.api}/orders/confirm/${id}`, {}).toPromise()
+  }
 }

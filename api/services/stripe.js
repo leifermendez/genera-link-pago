@@ -11,7 +11,7 @@ const generatePaymentIntent = async ({ amount, user, payment_method }) => {
         currency: process.env.STRIPE_CURRENCY,
         payment_method_types: ['card'],
         payment_method,
-        description: `${user}: Pago`
+        description: `Pago para la gente de Youtue -> ${user}: Pago`
     });
 
 
@@ -42,7 +42,7 @@ const generatePaymentMethod = async (token) => {
 
     const paymentMethod = await stripe.paymentMethods.create({
         type: 'card',
-        card: { token },
+        card: { token }
     });
 
     return paymentMethod
@@ -54,7 +54,6 @@ const generatePaymentMethod = async (token) => {
 
 const getPaymentDetail = async (id) => {
     const detailOrder = await stripe.paymentIntents.retrieve(id)
-    console.log(detailOrder)
     return detailOrder
 }
 

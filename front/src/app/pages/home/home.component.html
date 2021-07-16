@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div class="home">
+  <div class="home-form">
+    <div class="home-alert">
+      A continuacion ingresa el monto a cobrar y el nombre del cliente!<br>
+      Si quieres ver la explicación y configuracion de este proyecto <b><a href="">Ver video</a></b>
+    </div>
+    <form [formGroup]="form" (submit)="init()">
+      <div class="input">
+        <label class="label">Nombre</label>
+        <input type="text" formControlName="name" placeholder="Leifer Mendez">
+      </div>
+      <div class="input">
+        <label class="label">Monto</label>
+        <input type="text" formControlName="amount" placeholder="15.00">
+      </div>
+      <div class="home-btn">
+        <button [disabled]="form.invalid">Generar Link</button>
+      </div>
+    </form>
+  </div>
+  <div class="home-img">
+    <img src="../../../assets/image_1.png" alt="">
+  </div>
+</div>

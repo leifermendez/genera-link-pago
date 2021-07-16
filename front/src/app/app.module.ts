@@ -11,11 +11,15 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TOAST_NOTIFICATIONS_CONFIG, ToastNotificationsModule} from "ngx-toast-notifications";
 import {LoadingBarModule} from "@ngx-loading-bar/core";
 import {LoadingBarHttpClientModule} from "@ngx-loading-bar/http-client";
+import { HeaderComponent } from './pages/header/header.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CheckoutPageComponent
+    CheckoutPageComponent,
+    HeaderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

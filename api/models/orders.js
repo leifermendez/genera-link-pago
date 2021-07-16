@@ -8,9 +8,6 @@ const OrdersSchema = new mongoose.Schema({
     amount: {
         type: Number
     },
-    user: {
-        type: mongoose.Types.ObjectId,
-    },
     localizator: {
         type: String,
         default: () => nanoid.nanoid()

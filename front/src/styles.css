@@ -20,6 +20,7 @@ body, html {
 }
 
 button{
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
 }
 
@@ -42,4 +43,8 @@ input::placeholder {
 
 a{
   text-decoration: none;
+}
+
+button:disabled {
+  opacity: .5;
 }
